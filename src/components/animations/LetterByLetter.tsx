@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useSpring, animated } from 'react-spring';
+import React, { useEffect, useState } from "react";
 
 interface LetterByLetterProps {
   text: string;
@@ -8,15 +7,15 @@ interface LetterByLetterProps {
 const LetterByLetter: React.FC<LetterByLetterProps> = ({ text }) => {
   const [show, setShow] = useState(false);
   // Split text into words first
-  const words = text.split(' ');
-  
+  const words = text.split(" ");
+
   useEffect(() => {
     setShow(false);
     // Start animation after a small delay
     const timeout = setTimeout(() => {
       setShow(true);
     }, 100);
-    
+
     return () => clearTimeout(timeout);
   }, [text]);
 
@@ -24,19 +23,19 @@ const LetterByLetter: React.FC<LetterByLetterProps> = ({ text }) => {
     <div className="animated-text">
       {words.map((word, wordIndex) => (
         <React.Fragment key={wordIndex}>
-          <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-            {word.split('').map((letter, letterIndex) => (
-              <Letter 
-                key={letterIndex} 
-                letter={letter} 
-                index={(wordIndex * 100) + letterIndex} 
-                visible={show} 
+          <span style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+            {word.split("").map((letter, letterIndex) => (
+              <Letter
+                key={letterIndex}
+                letter={letter}
+                index={wordIndex * 100 + letterIndex}
+                visible={show}
               />
             ))}
           </span>
           {/* Add space between words, but not after the last word */}
           {wordIndex < words.length - 1 && (
-            <span style={{ display: 'inline-block', width: '0.5rem' }}></span>
+            <span style={{ display: "inline-block", width: "0.5rem" }}></span>
           )}
         </React.Fragment>
       ))}
@@ -52,14 +51,14 @@ interface LetterProps {
 
 const Letter: React.FC<LetterProps> = ({ letter, index, visible }) => {
   // Don't animate spaces, just render them
-  if (letter === ' ') {
-    return <span style={{ display: 'inline-block', width: '0.5rem' }}></span>;
+  if (letter === " ") {
+    return <span style={{ display: "inline-block", width: "0.5rem" }}></span>;
   }
-  
+
   const style = {
-    display: 'inline-block',
+    display: "inline-block",
     opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(20px)',
+    transform: visible ? "translateY(0)" : "translateY(20px)",
     transition: `opacity 0.5s ease, transform 0.5s ease`,
     transitionDelay: `${index * 2}ms`,
   };
@@ -71,4 +70,4 @@ const Letter: React.FC<LetterProps> = ({ letter, index, visible }) => {
   );
 };
 
-export default LetterByLetter; 
+export default LetterByLetter;
